@@ -1,0 +1,191 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "main.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Job"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/adv/get/{title}": {
+      "get": {
+        "operationId": "Job_GetAdv",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mainAdv"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Job"
+        ]
+      }
+    },
+    "/api/workers/add": {
+      "post": {
+        "operationId": "Job_AddWorker",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mainResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "worker",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mainworker"
+            }
+          }
+        ],
+        "tags": [
+          "Job"
+        ]
+      }
+    },
+    "/api/workers/get/{title}": {
+      "get": {
+        "operationId": "Job_GetWorkers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mainGetWorkersResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Job"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "mainAdv": {
+      "type": "object",
+      "properties": {
+        "Title": {
+          "type": "string"
+        },
+        "salary": {
+          "type": "string",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "mainGetWorkersResp": {
+      "type": "object",
+      "properties": {
+        "workers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mainworker"
+          }
+        }
+      }
+    },
+    "mainResp": {
+      "type": "object",
+      "properties": {
+        "Status": {
+          "type": "string"
+        }
+      }
+    },
+    "mainworker": {
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "secondname": {
+          "type": "string"
+        },
+        "advTitle": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
