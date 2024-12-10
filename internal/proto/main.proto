@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "/pb";
+
+import "google/api/annotations.proto";
+
+message Adv{
+  string Title = 1;
+  int64 salary = 2;
+  string description = 3;
+}
+message ReqGetAdv{
+  string title = 1;
+}
+
+message Resp{
+  string Status = 1;
+}
+
+message worker{
+  string firstname = 1;
+  string secondname = 2;
+  string advTitle = 3;
+}
+message AddWorkerReq{
+  worker worker = 1;
+}
+
+message GetWorkersReq{
+  string title = 1;
+}
+
+message GetWorkersResp{
+  repeated worker workers = 1;
+}
+
+service Job{
+  rpc GetWorkers(GetWorkersReq) returns (GetWorkersResp){
+    option (google.api.http) = {
+      get : "/api/workers/get/{title}"
+    };
+  }
+  rpc AddWorker(AddWorkerReq) returns (Resp){
+    option (google.api.http) = {
+      post : "/api/workers/add"
+      body : "worker"
+    };
+  }
+  rpc GetAdv(ReqGetAdv) returns (Adv){
+    option (google.api.http) = {
+      get : "/api/adv/get/{title}"
+    };
+  }
+}
